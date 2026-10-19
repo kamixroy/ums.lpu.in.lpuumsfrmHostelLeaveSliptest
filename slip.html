@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1024, initial-scale=1">
+<title>Hostel Leave Slip</title>
+
+<style>
+
+@font-face{
+  font-family:'LocalFont';
+  src:url('Font.ttf') format('truetype');
+  font-weight:100 900;
+  font-style:normal;
+}
+*{
+  font-family:'LocalFont', sans-serif !important;
+}
+
+
+/* BODY */
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#FBFBFB;
+}
+
+/* TOP BAR */
+.top-bar{
+  background:#323232;
+  color:#fff;
+  height:48px;
+  display:flex;
+  align-items:center;
+  padding:0 12px;
+  font-weight:800;
+}
+
+.back-btn{
+  font-size:22px;
+  cursor:pointer;
+}
+
+.top-title{
+  flex:1;
+  text-align:center;
+  font-size:16px;
+  margin-right:22px;
+}
+
+/* PAGE — keep the page in desktop mode, with the slip compact and centered near the top */
+.wrapper{
+  width:500px;
+  margin:0 auto;
+  padding:8px 14px 14px;
+  box-sizing:border-box;
+}
+
+/* BLUE BAR */
+.blue-bar{
+  background:linear-gradient(#1a73d9,#0b4ea2);
+  color:#fff;
+  text-align:center;
+  padding:9px;
+  font-weight:800;
+  font-size:14px;
+  border-radius:4px 4px 0 0;
+}
+
+/* GREY CARD */
+.grey-card{
+  background:#EFEFEF;
+  padding:2px 8px;
+  border-radius:0 0 4px 4px;
+}
+
+/* SLIP CARD */
+.slip-card{
+  background:#FFFFFF;
+  padding:1px;
+  margin:1px 10px 6px 10px;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.header-text{
+  text-align:center;
+  flex:1;
+}
+
+.header-text h1{
+  margin:0;
+  font-size:16px;
+  font-weight:900;
+}
+
+.header-text h2{
+  margin:3px 0;
+  font-size:13px;
+  font-weight:800;
+}
+
+.leave-type{
+  color:#0b4ea2;
+  font-weight:800;
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+/* PHOTO */
+.photo{
+  width:72px;
+  height:72px;
+  border:0.5px solid #999;
+}
+
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* BARCODE IMAGE */
+.barcode{
+  display:block;
+  margin:26px auto 30px auto;
+  width:260px;
+  height:95px;
+  object-fit:contain;
+}
+
+/* DETAILS */
+.row{
+  display:flex;
+  font-weight:800;
+  font-size:12px;
+  margin:1px 0;
+}
+
+.label{ width:140px; }
+.colon{ width:10px; }
+
+.value{
+  color:#0b4ea2;
+  font-weight:800;
+  margin-left:-3px;
+}
+
+
+/* GATE STATUS BOX */
+.gate-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  margin-top:24px;
+  font-weight:400;
+  color:#111;
+}
+
+.gate-table th{
+  background:linear-gradient(#c52a16,#970d05);
+  color:#fff;
+  text-align:left;
+  font-size:13px;
+  font-weight:800;
+  padding:10px 4px;
+  border:1px solid #777;
+}
+
+.gate-table th:first-child{ width:63%; }
+.gate-table th:last-child{ width:37%; }
+
+.gate-table td{
+  border:1px solid #555;
+  padding:5px 3px;
+  font-size:16px;
+  line-height:1.25;
+  vertical-align:middle;
+  overflow-wrap:anywhere;
+}
+
+.gate-table .activated{
+  color:green;
+  font-size:16px;
+  white-space:nowrap;
+}
+
+.gate-table .gate-status{
+  font-size:16px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.gate-table .gate-status.activated{color:green;}
+.gate-table .gate-status.processing,
+.gate-table .gate-status.in-process{color:#d59b27;}
+
+.gate-note{
+  color:#b51d1d;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.25;
+  margin:4px 0 2px;
+}
+
+@media (max-width:380px){
+  .gate-table td{font-size:13px;}
+  .gate-table .activated{font-size:13px;}
+  .gate-table th{font-size:11px;}
+}
+
+/* Keep the compact slip centered at the top of the desktop-width page */
+.wrapper{position:relative;}
+@media (min-width:1024px){
+  .wrapper{width:500px;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+<span class="back-btn" onclick="history.back()">←</span>
+<span class="top-title">Hostel Leave Slip</span>
+</div>
+
+<div class="wrapper">
+
+<div class="blue-bar">Hostel Leave Slip</div>
+
+<div class="grey-card">
+<div class="slip-card">
+
+<div class="header">
+
+<div class="header-text">
+<h1>Lovely Professional University</h1>
+<h2>Hostel Checkout Gate Pass</h2>
+<div class="leave-type" id="leaveType"></div>
+</div>
+
+<div class="photo">
+<img src="profile.png">
+</div>
+
+</div>
+
+<!-- BARCODE IMAGE -->
+<img class="barcode" src="barcode.png">
+
+<div class="row"><div class="label">Leave Id</div><div class="colon">:</div><div class="value" id="leaveId"></div></div>
+<div class="row"><div class="label">Leave Code</div><div class="colon">:</div><div class="value" id="leaveCode"></div></div>
+<div class="row"><div class="label">VID</div><div class="colon">:</div><div class="value" id="vid"></div></div>
+<div class="row"><div class="label">Name</div><div class="colon">:</div><div class="value" id="studentName"></div></div>
+<div class="row"><div class="label">Date of Apply</div><div class="colon">:</div><div class="value" id="apply"></div></div>
+<div class="row"><div class="label">Date of Leaving</div><div class="colon">:</div><div class="value" id="leaving"></div></div>
+<div class="row"><div class="label">Date of Return</div><div class="colon">:</div><div class="value" id="returning"></div></div>
+<div class="row"><div class="label">Checkout Time</div><div class="colon">:</div><div class="value" id="checkout"></div></div>
+<div class="row"><div class="label">Checkin Time</div><div class="colon">:</div><div class="value"></div></div>
+<div class="row"><div class="label">Contact No.</div><div class="colon">:</div><div class="value">9508075703</div></div>
+<div class="row"><div class="label">Hostel</div><div class="colon">:</div><div class="value">Boys Hostel-03</div></div>
+<div class="row"><div class="label">Room Number</div><div class="colon">:</div><div class="value">B912-Bed D</div></div>
+
+<table class="gate-table">
+  <thead>
+    <tr>
+      <th>Gate No.</th>
+      <th>Activation Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="checkoutGate1Label">CheckOut(Exit) Gate-G2</td>
+      <td class="gate-status"></td>
+    </tr>
+    <tr>
+      <td id="checkoutGate2Label">CheckOut(Exit) Gate-G3</td>
+      <td class="gate-status"></td>
+    </tr>
+    <tr>
+      <td id="checkinGate1Label">CheckIn(Entry) Gate-G1</td>
+      <td class="gate-status"></td>
+    </tr>
+    <tr>
+      <td id="checkinGate2Label">CheckIn(Entry) Gate-G2</td>
+      <td class="gate-status"></td>
+    </tr>
+  </tbody>
+</table>
+<div class="gate-note">Note : Do not look back after checkout; please proceed forward only.</div>
+
+</div>
+</div>
+</div>
+
+<script>
+
+const q=new URLSearchParams(location.search);
+
+function formatDateTime(value){
+  if(!value) return "";
+
+  const d=new Date(value);
+
+  const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  let day=d.getDate().toString().padStart(2,'0');
+  let month=months[d.getMonth()];
+  let year=d.getFullYear();
+
+  let h=d.getHours();
+  let m=d.getMinutes().toString().padStart(2,'0');
+
+  let ampm=h>=12?"PM":"AM";
+  h=h%12||12;
+
+  return `${day} ${month} ${year} Time - ${h}:${m}${ampm}`;
+}
+
+leaveId.textContent=q.get("leaveId")||"";
+leaveCode.textContent=q.get("leaveCode")||"";
+vid.textContent=q.get("vid")||"";
+studentName.textContent=q.get("name")||"";
+
+apply.textContent=formatDateTime(q.get("apply"));
+leaving.textContent=formatDateTime(q.get("leaving"));
+returning.textContent=formatDateTime(q.get("returning"));
+checkout.textContent=formatDateTime(q.get("checkout"));
+
+leaveType.textContent=q.get("leaveType")||"Night Leave";
+
+document.getElementById("checkoutGate1Label").textContent =
+  "CheckOut(Exit) Gate-" + (q.get("checkoutGate1") || "G2");
+document.getElementById("checkoutGate2Label").textContent =
+  "CheckOut(Exit) Gate-" + (q.get("checkoutGate2") || "G3");
+document.getElementById("checkinGate1Label").textContent =
+  "CheckIn(Entry) Gate-" + (q.get("checkinGate1") || "G1");
+document.getElementById("checkinGate2Label").textContent =
+  "CheckIn(Entry) Gate-" + (q.get("checkinGate2") || "G2");
+
+
+const selectedStatus = q.get("gateStatus") || "Activated";
+document.querySelectorAll(".gate-status").forEach((cell) => {
+  cell.classList.remove("activated", "processing", "in-process");
+  if (selectedStatus === "Activated") {
+    cell.classList.add("activated");
+    cell.textContent = "✓ Activated";
+  } else if (selectedStatus === "Processing") {
+    cell.classList.add("processing");
+    cell.textContent = "⏳ Processing";
+  } else {
+    cell.classList.add("in-process");
+    cell.textContent = "⏳ In Process";
+  }
+});
+
+
+</script>
+
+</body>
+</html>
